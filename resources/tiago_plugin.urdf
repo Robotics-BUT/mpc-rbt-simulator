@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<robot name="Tiago Base">
+    <webots>
+        <plugin type="tiago_driver::TiagoDriver" />
+    </webots>
+</robot>
