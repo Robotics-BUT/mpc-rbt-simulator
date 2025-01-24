@@ -44,6 +44,7 @@ install(DIRECTORY
   launch
   resources
   worlds
+  rviz
   DESTINATION share/${PROJECT_NAME}/
 )
 
