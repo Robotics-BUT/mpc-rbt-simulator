@@ -19,19 +19,20 @@ public:
             std::unordered_map<std::string, std::string> &parameters) override;
 
 private:
-  webots_ros2_driver::WebotsNode *node_;
   void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
+
+  webots_ros2_driver::WebotsNode *node_;
 
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr joint_publisher_;
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr
-      cmd_vel_subscription_;
+      cmd_vel_subscriber_;
 
-  geometry_msgs::msg::Twist cmd_vel_msg;
+  geometry_msgs::msg::Twist cmd_vel_msg_;
 
-  WbDeviceTag right_motor;
-  WbDeviceTag left_motor;
-  WbDeviceTag right_motor_sensor;
-  WbDeviceTag left_motor_sensor;
+  WbDeviceTag right_motor_;
+  WbDeviceTag left_motor_;
+  WbDeviceTag right_motor_sensor_;
+  WbDeviceTag left_motor_sensor_;
 
   double time_step_;
 
