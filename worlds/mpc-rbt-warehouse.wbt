@@ -15,8 +15,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.3297587157749972 -0.47912849520869105 -0.8134464176880244 4.4451475052306435
-  position -0.5439183800842695 -7.672249532949432 14.41866445416626
+  orientation -0.5052139421960968 0.5052144920037264 0.6996550504928093 1.9206083938660308
+  position 1.1874169347037865e-05 -6.493482116868217 20.103105193624515
 }
 TexturedBackground {
   texture "empty_office"
@@ -27,309 +27,6 @@ Floor {
   size 14 7
   appearance BakelitePlastic {
   }
-}
-Puma560 {
-  translation 5.6 2.3 0.6
-  rotation 0 0 1 3.14159
-}
-Puma560 {
-  translation 5.6 0.3 0.6
-  rotation 0 0 1 3.14159
-  name "PUMA 560(1)"
-}
-Puma560 {
-  translation 5.6 -1.7 0.6
-  rotation 0 0 1 3.14159
-  name "PUMA 560(2)"
-}
-CardboardBox {
-  translation -5.5 -2 0.25
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -1.5 0.25
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -1 0.25
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -0.5 0.25
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 0 0.25
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 0.5 0.25
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 1 0.25
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -2 0.75
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -1.5 0.75
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -1 0.75
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 -0.5 0.75
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 0 0.75
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 0.5 0.75
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -5.5 1 0.75
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -2 0.25
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -1.5 0.25
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -1 0.25
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -0.5 0.25
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 0 0.25
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 0.5 0.25
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 1 0.25
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -2 0.75
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -1.5 0.75
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -1 0.75
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 -0.5 0.75
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 0 0.75
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 0.5 0.75
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -3.5 1 0.75
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -2 0.25
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -1.5 0.25
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -1 0.25
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -0.5 0.25
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 0 0.25
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 0.5 0.25
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 1 0.25
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -2 0.75
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -1.5 0.75
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -1 0.75
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 -0.5 0.75
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 0 0.75
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 0.5 0.75
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation -1.5 1 0.75
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -2 0.25
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -1.5 0.25
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -1 0.25
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -0.5 0.25
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 0 0.25
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 0.5 0.25
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 1 0.25
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -2 0.75
-  name "cardboard box 0"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -1.5 0.75
-  name "cardboard box 1"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -1 0.75
-  name "cardboard box 2"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 -0.5 0.75
-  name "cardboard box 3"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 0 0.75
-  name "cardboard box 4"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 0.5 0.75
-  name "cardboard box 5"
-  size 0.5 0.5 0.5
-}
-CardboardBox {
-  translation 0.5 1 0.75
-  name "cardboard box 6"
-  size 0.5 0.5 0.5
-}
-TiagoBase {
-  translation 0 2.5 0.095
-  name "tiago_base"
-  controller "<extern>"
-  lidarSlot [
-    HokuyoUrg04lxug01 {
-    }
-  ]
 }
 Wall {
   translation -7 0 0
@@ -355,6 +52,40 @@ Wall {
   name "wall(3)"
   size 14.2 0.2 2
 }
+TiagoBase {
+  translation 0 2.5 0.095
+  name "tiago_base"
+  controller "<extern>"
+  lidarSlot [
+    HokuyoUrg04lxug01 {
+    }
+  ]
+}
+Puma560 {
+  translation 5.6 2.3 0.6
+  rotation 0 0 1 3.14159
+}
+Puma560 {
+  translation 5.6 0.3 0.6
+  rotation 0 0 1 3.14159
+  name "PUMA 560(1)"
+}
+Puma560 {
+  translation 5.6 -1.7 0.6
+  rotation 0 0 1 3.14159
+  name "PUMA 560(2)"
+}
+WoodenBox {
+  translation 5.6 2.3 0.3
+}
+WoodenBox {
+  translation 5.6 0.3 0.3
+  name "wooden box(1)"
+}
+WoodenBox {
+  translation 5.6 -1.7 0.3
+  name "wooden box(2)"
+}
 ConveyorBelt {
   translation 6 1.5 0
   size 1.7 0.5 0.6
@@ -369,14 +100,282 @@ ConveyorBelt {
   name "conveyor belt(2)"
   size 1.7 0.5 0.6
 }
-WoodenBox {
-  translation 5.6 2.3 0.3
+CardboardBox {
+  translation -5.5 -2 0.25
+  size 0.5 0.5 0.5
 }
-WoodenBox {
-  translation 5.6 0.3 0.3
-  name "wooden box(1)"
+CardboardBox {
+  translation -5.5 -1.5 0.25
+  name "cardboard box(1)"
+  size 0.5 0.5 0.5
 }
-WoodenBox {
-  translation 5.6 -1.7 0.3
-  name "wooden box(2)"
+CardboardBox {
+  translation -5.5 -1 0.25
+  name "cardboard box(2)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 -0.5 0.25
+  name "cardboard box(3)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 0 0.25
+  name "cardboard box(4)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 0.5 0.25
+  name "cardboard box(5)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 1 0.25
+  name "cardboard box(6)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 -2 0.75
+  name "cardboard box(7)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 -1.5 0.75
+  name "cardboard box(8)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 -1 0.75
+  name "cardboard box(9)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 -0.5 0.75
+  name "cardboard box(10)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 0 0.75
+  name "cardboard box(11)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 0.5 0.75
+  name "cardboard box(12)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -5.5 1 0.75
+  name "cardboard box(13)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -2 0.25
+  name "cardboard box(14)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -1.5 0.25
+  name "cardboard box(15)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -1 0.25
+  name "cardboard box(16)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -0.5 0.25
+  name "cardboard box(17)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 0 0.25
+  name "cardboard box(18)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 0.5 0.25
+  name "cardboard box(19)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 1 0.25
+  name "cardboard box(20)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -2 0.75
+  name "cardboard box(21)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -1.5 0.75
+  name "cardboard box(22)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -1 0.75
+  name "cardboard box(23)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 -0.5 0.75
+  name "cardboard box(24)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 0 0.75
+  name "cardboard box(25)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 0.5 0.75
+  name "cardboard box(26)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -3.5 1 0.75
+  name "cardboard box(27)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -2 0.25
+  name "cardboard box(28)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -1.5 0.25
+  name "cardboard box(29)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -1 0.25
+  name "cardboard box(30)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -0.5 0.25
+  name "cardboard box(31)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 0 0.25
+  name "cardboard box(32)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 0.5 0.25
+  name "cardboard box(33)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 1 0.25
+  name "cardboard box(34)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -2 0.75
+  name "cardboard box(35)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -1.5 0.75
+  name "cardboard box(36)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -1 0.75
+  name "cardboard box(37)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 -0.5 0.75
+  name "cardboard box(38)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 0 0.75
+  name "cardboard box(39)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 0.5 0.75
+  name "cardboard box(40)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation -1.5 1 0.75
+  name "cardboard box(41)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -2 0.25
+  name "cardboard box(42)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -1.5 0.25
+  name "cardboard box(43)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -1 0.25
+  name "cardboard box(44)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -0.5 0.25
+  name "cardboard box(45)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 0 0.25
+  name "cardboard box(46)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 0.5 0.25
+  name "cardboard box(47)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 1 0.25
+  name "cardboard box(48)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -2 0.75
+  name "cardboard box(49)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -1.5 0.75
+  name "cardboard box(50)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -1 0.75
+  name "cardboard box(51)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 -0.5 0.75
+  name "cardboard box(52)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 0 0.75
+  name "cardboard box(53)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 0.5 0.75
+  name "cardboard box(54)"
+  size 0.5 0.5 0.5
+}
+CardboardBox {
+  translation 0.5 1 0.75
+  name "cardboard box(55)"
+  size 0.5 0.5 0.5
 }
