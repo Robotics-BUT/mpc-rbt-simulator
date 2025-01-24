@@ -17,7 +17,8 @@ def generate_launch_description():
     tiago_description = {'robot_description': tiago_description_content}
 
     webots = WebotsLauncher(
-        world=os.path.join(package_dir, 'worlds', 'mpc-rbt-warehouse.wbt')
+        world=os.path.join(package_dir, 'worlds', 'mpc-rbt-warehouse.wbt'),
+        ros2_supervisor=True
     )
 
     tiago_driver = WebotsController(
@@ -37,6 +38,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         webots,
+        webots._supervisor,
         tiago_driver,
         robot_state_publisher_node,
         launch.actions.RegisterEventHandler(

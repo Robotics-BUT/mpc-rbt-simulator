@@ -17,6 +17,7 @@ void TiagoDriver::init(
     std::unordered_map<std::string, std::string> &parameters) {
 
   node_ = node;
+  time_step_ = wb_robot_get_basic_time_step();
 
   right_motor = wb_robot_get_device("wheel_right_joint");
   left_motor = wb_robot_get_device("wheel_left_joint");
@@ -35,6 +36,9 @@ void TiagoDriver::init(
       std::bind(&TiagoDriver::cmdVelCallback, this, std::placeholders::_1));
   
   joint_publisher_ = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", 1);
+
+  right_motor_pos_last_ = wb_position_sensor_get_value(right_motor_sensor);
+  left_motor_pos_last_ = wb_position_sensor_get_value(left_motor_sensor);
 }
 
 void TiagoDriver::cmdVelCallback(
@@ -43,8 +47,10 @@ void TiagoDriver::cmdVelCallback(
   cmd_vel_msg.angular = msg->angular;
 }
 
+// the step() method is called at every time step of the simulation
 void TiagoDriver::step() {
-  // kinematics
+
+  // inverse Kinematics - compute the motor speeds based on the cmd_vel
   auto forward_speed = cmd_vel_msg.linear.x;
   auto angular_speed = cmd_vel_msg.angular.z;
   auto command_motor_left =
@@ -59,18 +65,24 @@ void TiagoDriver::step() {
   wb_motor_set_velocity(right_motor, command_motor_right);
 
   // read motor position
-  auto right_motor_position = wb_position_sensor_get_value(right_motor_sensor);
-  auto left_motor_position = wb_position_sensor_get_value(left_motor_sensor);
+  auto right_motor_pos = wb_position_sensor_get_value(right_motor_sensor);
+  auto left_motor_pos = wb_position_sensor_get_value(left_motor_sensor);
 
-  // TODO compute motor angular velocity
+  // compute motor angular velocity
+  auto right_motor_vel = (right_motor_pos - right_motor_pos_last_) / (time_step_ * 0.001);
+  auto left_motor_vel = (left_motor_pos - left_motor_pos_last_) / (time_step_ * 0.001);
+  right_motor_pos_last_ = right_motor_pos;
+  left_motor_pos_last_ = left_motor_pos;
 
   // publish motor joint states
   auto message = sensor_msgs::msg::JointState();
   message.header.stamp = node_->get_clock()->now();
   message.name.push_back("wheel_right_joint");
   message.name.push_back("wheel_left_joint");
-  message.position.push_back(right_motor_position);
-  message.position.push_back(left_motor_position);
+  message.position.push_back(right_motor_pos);
+  message.position.push_back(left_motor_pos);
+  message.velocity.push_back(right_motor_vel);
+  message.velocity.push_back(left_motor_vel);
   joint_publisher_->publish(message);
 }
 } // namespace tiago_driver

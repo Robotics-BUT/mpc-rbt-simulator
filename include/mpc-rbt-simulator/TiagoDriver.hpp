@@ -32,7 +32,11 @@ private:
   WbDeviceTag left_motor;
   WbDeviceTag right_motor_sensor;
   WbDeviceTag left_motor_sensor;
-   
+
+  double time_step_;
+
+  float right_motor_pos_last_;
+  float left_motor_pos_last_;
 };
 } // namespace tiago_driver
 #endif
