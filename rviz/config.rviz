@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1/Tree1/base_link1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 746
   - Class: rviz_common/Selection
@@ -75,32 +75,40 @@ Visualization Manager:
           Value: false
         map:
           Value: true
+        wheel_left_link:
+          Value: true
+        wheel_right_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          Hokuyo_URG_04LX_UG01:
-            {}
-          accelerometer:
-            {}
-          base_cover_link:
-            {}
-          base_footprint:
-            map:
+        map:
+          base_link:
+            Hokuyo_URG_04LX_UG01:
               {}
-          base_sonar_01_link:
-            {}
-          base_sonar_02_link:
-            {}
-          base_sonar_03_link:
-            {}
-          gyro:
-            {}
-          inertial unit:
-            {}
+            accelerometer:
+              {}
+            base_cover_link:
+              {}
+            base_footprint:
+              {}
+            base_sonar_01_link:
+              {}
+            base_sonar_02_link:
+              {}
+            base_sonar_03_link:
+              {}
+            gyro:
+              {}
+            inertial unit:
+              {}
+            wheel_left_link:
+              {}
+            wheel_right_link:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -225,8 +233,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.09099999815225601
-        Min Value: 0.09099999815225601
+        Max Value: -0.004000000189989805
+        Min Value: -0.004000000189989805
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -252,7 +260,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /tiago_base/tiago_base/Hokuyo_URG_04LX_UG01
+        Value: /tiago_base/Hokuyo_URG_04LX_UG01
       Use Fixed Frame: true
       Use rainbow: true
       Value: true

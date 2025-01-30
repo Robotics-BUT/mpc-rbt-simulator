@@ -5,7 +5,6 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
-# Besides the package specific dependencies we also need the `pluginlib` and `webots_ros2_driver`
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -13,6 +12,8 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 # Export the plugin configuration file
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
@@ -39,14 +40,6 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
-# Install additional directories.
-install(DIRECTORY
-  launch
-  resources
-  worlds
-  rviz
-  DESTINATION share/${PROJECT_NAME}/
-)
 
 ament_export_include_directories(
   include
@@ -54,4 +47,23 @@ ament_export_include_directories(
 ament_export_libraries(
   ${PROJECT_NAME}
 )
+
+include_directories(include)
+
+add_executable(localization src/Localization.cpp)
+ament_target_dependencies(localization rclcpp sensor_msgs geometry_msgs tf2 tf2_ros)
+
+install(TARGETS
+  localization
+  DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY
+  launch
+  maps
+  resources
+  worlds
+  rviz
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 ament_package()

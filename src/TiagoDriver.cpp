@@ -8,8 +8,8 @@
 #include <webots/robot.h>
 #include <webots/position_sensor.h>
 
-#define HALF_DISTANCE_BETWEEN_WHEELS 0.045
-#define WHEEL_RADIUS 0.025
+#define HALF_DISTANCE_BETWEEN_WHEELS 0.202
+#define WHEEL_RADIUS 0.0985
 
 namespace tiago_driver {
 void TiagoDriver::init(

@@ -24,10 +24,16 @@ def generate_launch_description():
 
     tiago_driver = WebotsController(
         robot_name='tiago_base',
-        namespace='tiago_base',
+        # namespace='tiago_base',
         parameters=[
             {'robot_description': robot_description_path},
         ]
+    )
+
+    localization_node = Node(
+        package='mpc-rbt-simulator',
+        executable='localization',
+        output='screen'
     )
 
     robot_state_publisher_node = Node(
@@ -49,6 +55,7 @@ def generate_launch_description():
         webots,
         webots._supervisor,
         tiago_driver,
+        localization_node,
         robot_state_publisher_node,
         rviz_node,
         launch.actions.RegisterEventHandler(

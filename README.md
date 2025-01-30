@@ -19,9 +19,12 @@ TODO
 ## TODO
 
 - Create a static 2D map (occupancy grid) for given world for the path planning purposes OR create an automatic converter .wbt -> .pgm (occupancy grid)
+- Add a map server to provide a static map for path planning a rviz visualization
 - Prepare templates (source files, nodes..) for students for the individual tasks, eg localization, path planning..
+- Validate robot parameters - wheel radius and distance
 - Create documentation (install, usage..)
 
 ## Issues
 
 - Fix and simplify the robot .urdf model - some transforms don't exist (casters), some frames aren't necessary.
+- Fix namespaces - some topics already have /tiago_base namespace provided by Webots 
