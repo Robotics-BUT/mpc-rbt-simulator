@@ -52,7 +52,7 @@ mkdir src
 
 ### MPC-RBT Simulator
 
-This repository embodies a ROS 2 package. Navigate to the `src` and clone it:
+This repository embodies a ROS 2 package. Navigate to the `mpc-rbt_ws/src` and clone it:
 
 ```
 git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git
@@ -76,7 +76,7 @@ rosdep update
 Install the dependencies using the following command from the workspace root directory:
 
 ```
-rosdep install --from-paths src -y --ignore-src
+rosdep install --from-paths src -y --ignore-src --rosdistro humble
 ```
 
 Most of the dependencies are a common part of the ROS distribution. The exception is the package `webots_ros2_driver` which is necessary to connect the ROS 2 and Webots simulator.
@@ -125,8 +125,10 @@ ros2 launch mpc-rbt-simulator simulation.launch.py
 
 - Create a static 2D map (occupancy grid) for given world for the path planning purposes OR create an automatic converter .wbt -> .pgm (occupancy grid)
 - Add a map server to provide a static map for path planning a rviz visualization
+- Implement robot stop if the driver doesn't receive cmd_vel messages
 - Prepare templates (source files, nodes..) for students for the individual tasks, eg localization, path planning..
 - Validate robot parameters - wheel radius and distance
+- Remove unnecessary topics
 - Running the project in labs: ROS_DOMAIN_ID per student / ROS_LOCALHOST_ONLY; where to store student work (GitHub/locally/..)?
 - Create documentation (install, usage..)
 
