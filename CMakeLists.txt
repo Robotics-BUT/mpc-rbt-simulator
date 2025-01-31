@@ -13,6 +13,8 @@ find_package(pluginlib REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(nav2_map_server REQUIRED)
+find_package(nav2_lifecycle_manager REQUIRED)
 
 # Export the plugin configuration file
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
