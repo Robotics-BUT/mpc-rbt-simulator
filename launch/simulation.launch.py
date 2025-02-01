@@ -13,7 +13,7 @@ def generate_launch_description():
     robot_description_path = os.path.join(package_dir, 'resources', 'tiago_plugin.urdf')
     tiago_description_path = os.path.join(package_dir, 'resources', 'tiago_model_ros.urdf')
     rviz_config_path = os.path.join(package_dir, 'rviz', 'config.rviz')
-    map_file_path = os.path.join(package_dir, 'maps', 'empty_map_5cmpx.yaml')
+    map_file_path = os.path.join(package_dir, 'maps', 'map.yaml')
 
     tiago_description_content = Command(['xacro ', tiago_description_path])
     tiago_description = {'robot_description': tiago_description_content}
