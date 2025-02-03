@@ -11,8 +11,9 @@ from webots_ros2_driver.webots_controller import WebotsController
 def generate_launch_description():
     package_dir = get_package_share_directory('mpc-rbt-simulator')
     robot_description_path = os.path.join(package_dir, 'resources', 'tiago_plugin.urdf')
-    tiago_description_path = os.path.join(package_dir, 'resources', 'tiago_ros.urdf')
+    tiago_description_path = os.path.join(package_dir, 'resources', 'tiago_model_ros.urdf')
     rviz_config_path = os.path.join(package_dir, 'rviz', 'config.rviz')
+    map_file_path = os.path.join(package_dir, 'maps', 'map.yaml')
 
     tiago_description_content = Command(['xacro ', tiago_description_path])
     tiago_description = {'robot_description': tiago_description_content}
@@ -50,6 +51,34 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path],
         output='screen'
     )
+    
+    map_server_node = Node(
+        package='nav2_map_server',
+        executable='map_server',
+        # namespace=namespace,
+        name='map_server',
+        output='screen',
+        emulate_tty=True,
+        parameters=[
+            {'use_sim_time': True},
+            {'yaml_filename': map_file_path},
+            {'topic_name': "map"},
+        ]
+    )
+    
+    lifecycle_manager_node = Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        # namespace=namespace,
+        name='lifecycle_manager_map_server',
+        output='screen',
+        emulate_tty=True,
+        parameters=[
+            {'autostart': True},
+            {'use_sim_time': True},
+            {'node_names': ['map_server']},
+        ]
+    )
 
     return LaunchDescription([
         webots,
@@ -58,6 +87,8 @@ def generate_launch_description():
         localization_node,
         robot_state_publisher_node,
         rviz_node,
+        map_server_node,
+        lifecycle_manager_node,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
                 target_action=webots,

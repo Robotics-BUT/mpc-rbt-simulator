@@ -33,7 +33,7 @@ https://github.com/cyberbotics/webots/releases/tag/R2023b
 And install it from the same directory using:
 
 ```
-sudo apt install ./webots_2023b_amd64.deb
+wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb
 ```
 
 Another options are listed here:
