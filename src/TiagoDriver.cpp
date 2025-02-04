@@ -1,4 +1,5 @@
 #include "mpc-rbt-simulator/TiagoDriver.hpp"
+#include "mpc-rbt-simulator/RobotConfig.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 #include <cstdio>
@@ -7,9 +8,6 @@
 #include <webots/motor.h>
 #include <webots/robot.h>
 #include <webots/position_sensor.h>
-
-#define HALF_DISTANCE_BETWEEN_WHEELS 0.202
-#define WHEEL_RADIUS 0.0985
 
 namespace tiago_driver {
 void TiagoDriver::init(
@@ -34,7 +32,7 @@ void TiagoDriver::init(
   cmd_vel_subscriber_ = node->create_subscription<geometry_msgs::msg::Twist>(
       "cmd_vel", rclcpp::SensorDataQoS().reliable(),
       std::bind(&TiagoDriver::cmdVelCallback, this, std::placeholders::_1));
-  
+
   joint_publisher_ = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", 1);
 
   right_motor_pos_last_ = wb_position_sensor_get_value(right_motor_sensor_);
@@ -43,6 +41,8 @@ void TiagoDriver::init(
 
 void TiagoDriver::cmdVelCallback(
     const geometry_msgs::msg::Twist::SharedPtr msg) {
+  //TODO(message-timeout): if we start using TwistStamped instead, we won't have to define this additional variable
+  last_received_cmd_vel_ = getCurrentTime();
   cmd_vel_msg_.linear = msg->linear;
   cmd_vel_msg_.angular = msg->angular;
 }
@@ -50,15 +50,18 @@ void TiagoDriver::cmdVelCallback(
 // the step() method is called at every time step of the simulation
 void TiagoDriver::step() {
 
+  // control timeout - reset cmd_vel if a new message was not received within the MESSAGE_TIMEOUT period
+  if ((getCurrentTime() - last_received_cmd_vel_) > MESSAGE_TIMEOUT) cmd_vel_msg_ = geometry_msgs::msg::Twist{};
+
   // inverse Kinematics - compute the motor speeds based on the cmd_vel
   auto forward_speed = cmd_vel_msg_.linear.x;
   auto angular_speed = cmd_vel_msg_.angular.z;
   auto command_motor_left =
-      (forward_speed - angular_speed * HALF_DISTANCE_BETWEEN_WHEELS) /
-      WHEEL_RADIUS;
+      (forward_speed - angular_speed * robot_config::HALF_DISTANCE_BETWEEN_WHEELS) /
+      robot_config::WHEEL_RADIUS;
   auto command_motor_right =
-      (forward_speed + angular_speed * HALF_DISTANCE_BETWEEN_WHEELS) /
-      WHEEL_RADIUS;
+      (forward_speed + angular_speed * robot_config::HALF_DISTANCE_BETWEEN_WHEELS) /
+      robot_config::WHEEL_RADIUS;
 
   // update motors
   wb_motor_set_velocity(left_motor_, command_motor_left);

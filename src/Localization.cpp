@@ -1,4 +1,5 @@
 #include "mpc-rbt-simulator/Localization.hpp"
+#include "mpc-rbt-simulator/RobotConfig.hpp"
 
 LocalizationNode::LocalizationNode() : rclcpp::Node("localization_node") {
     joint_subscriber_ = this->create_subscription<sensor_msgs::msg::JointState>(
