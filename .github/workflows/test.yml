@@ -30,6 +30,7 @@ jobs:
       - name: Install Webots
         shell: bash
         run: |
+          sudo apt install wget
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
           sudo wget -q https://cyberbotics.com/Cyberbotics.asc
@@ -59,6 +60,7 @@ jobs:
       - name: Install Webots
         shell: bash
         run: |
+          sudo apt install wget
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
           sudo wget -q https://cyberbotics.com/Cyberbotics.asc
