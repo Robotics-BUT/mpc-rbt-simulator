@@ -1,0 +1,53 @@
+name: Tests
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified, decide how to actually utilize this better
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Code builds on ${{ matrix.rosdistro }}
+    runs-on: ros:humble-ros-base-jammy
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Build Package
+        run: colcon build
+
+  tests:
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified, decide how to actually utilize this better
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Tests to run on ${{ matrix.rosdistro }}
+    runs-on: ros:humble-ros-base-jammy
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Build Package
+        run: colcon build
+      - name: Run Tests
+        run: colcon test --ctest-args tests
+      - name: Show Test Results
+        run: colcon test-result --verbose --all
