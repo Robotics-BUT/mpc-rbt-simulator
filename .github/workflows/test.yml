@@ -28,8 +28,10 @@ jobs:
         with:
           fetch-depth: 1
       - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        run: . /opt/ros/${{ matrix.rosdistro }}/setup.bash
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
+        shell: bash
         run: colcon build
 
   tests:
@@ -50,10 +52,14 @@ jobs:
         with:
           fetch-depth: 1
       - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        run: . /opt/ros/${{ matrix.rosdistro }}/setup.bash
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
+        shell: bash
         run: colcon build
       - name: Run Tests
+        shell: bash
         run: colcon test --ctest-args tests
       - name: Show Test Results
+        shell: bash
         run: colcon test-result --verbose --all
