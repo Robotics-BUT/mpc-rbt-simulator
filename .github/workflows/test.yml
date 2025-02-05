@@ -28,7 +28,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
+        run: . /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
         run: colcon build
 
@@ -50,7 +50,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
+        run: . /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
         run: colcon build
       - name: Run Tests
