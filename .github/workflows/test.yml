@@ -1,0 +1,100 @@
+name: Tests
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified,
+      # decide how to actually utilize this better (have just one job and use a build/test/launch matrix instead?)
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Build for ${{ matrix.rosdistro }}
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base-jammy
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      #TODO(webots): The final install command invokes configuration of the `keyboard-configuration` package,
+      # which will jump to a user cli input and hang indefinitely. For now this step is not required, but we will have
+      # to fix this if it becomes necessary.
+      #      - name: Install Webots
+      #        shell: bash
+      #        #NOTE: use this instead if we want to install the specific version explicitly
+      #        #wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
+      #        run: |
+      #          sudo apt update && sudo apt install wget -y
+      #          sudo mkdir -p /etc/apt/keyrings
+      #          cd /etc/apt/keyrings
+      #          sudo wget https://cyberbotics.com/Cyberbotics.asc
+      #          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+      #          sudo apt update && sudo apt install webots -y
+      - name: Install required ROS dependencies
+        shell: bash
+        run: |
+          sudo apt update && rosdep update
+          rosdep install --from-paths ./ --ignore-src -r -y
+      - name: Build the ROS Package
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
+
+  test:
+    needs: [ build ]
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified,
+      # decide how to actually utilize this better (have just one job and use a build/test/launch matrix instead?)
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Run tests for ${{ matrix.rosdistro }}
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base-jammy
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      #TODO(webots): The final install command invokes configuration of the `keyboard-configuration` package,
+      # which will jump to a user cli input and hang indefinitely. For now this step is not required, but we will have
+      # to fix this if it becomes necessary.
+      #      - name: Install Webots
+      #        shell: bash
+      #        #NOTE: use this instead if we want to install the specific version explicitly
+      #        #wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
+      #        run: |
+      #          sudo apt update && sudo apt install wget -y
+      #          sudo mkdir -p /etc/apt/keyrings
+      #          cd /etc/apt/keyrings
+      #          sudo wget https://cyberbotics.com/Cyberbotics.asc
+      #          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+      #          sudo apt update && sudo apt install webots -y
+      - name: Install required ROS dependencies
+        shell: bash
+        run: |
+          sudo apt update && rosdep update
+          rosdep install --from-paths ./ --ignore-src -r -y
+      - name: Build the ROS Package
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
+      - name: Run Tests
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test --ctest-args tests
+      - name: Show Test Results
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test-result --verbose --all
