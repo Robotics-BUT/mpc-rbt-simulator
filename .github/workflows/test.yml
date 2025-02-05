@@ -27,12 +27,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        shell: bash
-        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
         shell: bash
-        run: colcon build
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
 
   tests:
     strategy:
@@ -51,15 +48,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Setup environment for ROS ${{ matrix.rosdistro }}
-        shell: bash
-        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash
       - name: Build ROS Package
         shell: bash
-        run: colcon build
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
       - name: Run Tests
         shell: bash
-        run: colcon test --ctest-args tests
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test --ctest-args tests
       - name: Show Test Results
         shell: bash
-        run: colcon test-result --verbose --all
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test-result --verbose --all
