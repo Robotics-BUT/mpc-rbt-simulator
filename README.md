@@ -121,6 +121,25 @@ Launch the project (including the simulation) using:
 ros2 launch mpc-rbt-simulator simulation.launch.py
 ```
 
+## Testing
+
+Navigate to the workspace root directory (`mpc-rbt_ws`) and build it:
+
+```
+colcon build
+```
+
+Run tests using:
+
+```
+colcon test --ctest-args tests
+```
+
+View the results using:
+```
+colcon test-result --verbose --all
+```
+
 ## TODO
 
 - Create a static 2D map (occupancy grid) for given world for the path planning purposes OR create an automatic converter .wbt -> .pgm (occupancy grid)

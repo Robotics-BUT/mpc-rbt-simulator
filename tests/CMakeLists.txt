@@ -1,0 +1,6 @@
+ament_add_gtest(localizationTest localizationTest.cpp
+  WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+  APPEND_LIBRARY_DIRS ${PROJECT_NAME}-solutions
+  TIMEOUT 30
+)
+target_link_libraries(localizationTest ${PROJECT_NAME}-solutions)

@@ -36,11 +36,3 @@ void LocalizationNode::jointCallback(const sensor_msgs::msg::JointState & msg) {
     tf_broadcaster_->sendTransform(t);
 
 }
-
-int main(int argc, char * argv[])
-{
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<LocalizationNode>());
-  rclcpp::shutdown();
-  return 0;
-}
