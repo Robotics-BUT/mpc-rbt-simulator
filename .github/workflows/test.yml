@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 1
       - name: Install required ROS dependencies
         shell: bash
-        run: rosdep install --from-paths ./ --ignore-src -r -y
+        run: rosdep update && rosdep install --from-paths ./ --ignore-src -r -y
       - name: Build the ROS Package
         shell: bash
         run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
@@ -64,7 +64,7 @@ jobs:
           sudo apt update && sudo apt install webots -y
       - name: Install required ROS dependencies
         shell: bash
-        run: rosdep install --from-paths ./ --ignore-src -r -y
+        run: rosdep update && rosdep install --from-paths ./ --ignore-src -r -y
       - name: Build the ROS Package
         shell: bash
         run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
