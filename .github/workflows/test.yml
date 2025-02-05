@@ -31,7 +31,6 @@ jobs:
         shell: bash
         run: |
           sudo apt update && sudo apt install wget -y
-#          wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
           sudo wget https://cyberbotics.com/Cyberbotics.asc
@@ -66,7 +65,6 @@ jobs:
         shell: bash
         run: |
           sudo apt update && sudo apt install wget -y
-#          wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
           sudo wget https://cyberbotics.com/Cyberbotics.asc
