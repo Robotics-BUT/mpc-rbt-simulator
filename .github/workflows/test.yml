@@ -30,10 +30,10 @@ jobs:
       - name: Install Webots
         shell: bash
         run: |
-          sudo apt install wget
+          sudo apt update && sudo apt install wget
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
-          sudo wget -q https://cyberbotics.com/Cyberbotics.asc
+          sudo wget https://cyberbotics.com/Cyberbotics.asc
           echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
           sudo apt update && sudo apt install webots
       - name: Build ROS Package
@@ -60,10 +60,10 @@ jobs:
       - name: Install Webots
         shell: bash
         run: |
-          sudo apt install wget
+          sudo apt update && sudo apt install wget
           sudo mkdir -p /etc/apt/keyrings
           cd /etc/apt/keyrings
-          sudo wget -q https://cyberbotics.com/Cyberbotics.asc
+          sudo wget https://cyberbotics.com/Cyberbotics.asc
           echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
           sudo apt update && sudo apt install webots
       - name: Build ROS Package
