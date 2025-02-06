@@ -129,10 +129,17 @@ Navigate to the workspace root directory (`mpc-rbt_ws`) and build it:
 colcon build
 ```
 
+Spawn the simulation with the robot controller using:
+
+```
+webots --port=1234 --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
+```
+>**NOTE**: If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
+
 Run tests using:
 
 ```
-colcon test --ctest-args tests
+WEBOTS_CONTROLLER_PORT=1234 colcon test --ctest-args tests
 ```
 
 View the results using:

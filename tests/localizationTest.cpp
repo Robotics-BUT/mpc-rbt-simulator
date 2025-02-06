@@ -29,9 +29,6 @@ public:
 };
 
 TEST(localizationTest, works) {
-    // initialize the ROS context
-    rclcpp::init(0, nullptr);
-
     // set up the ROS node execution
     auto node = std::make_shared<LocalizationNode>();
     auto tester = std::make_shared<LocalizationTester>();
@@ -44,10 +41,10 @@ TEST(localizationTest, works) {
                                  }));
     node_thread.second.detach();
 
-    // perform testing logic for the test scenario
-    // TODO(tests): test something reasonable
+    // perform logic for the test scenario
     static constexpr unsigned test_iterations = 10;
     for (unsigned i = 0; i < test_iterations; ++i) {
+        // IF the tester publishes some valid joint states message ...
         sensor_msgs::msg::JointState msg;
         msg.header.stamp = tester->get_clock()->now();
         msg.name.emplace_back("wheel_right_joint");
@@ -59,6 +56,7 @@ TEST(localizationTest, works) {
         tester->joint_publisher_->publish(msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
+        // ... THEN the node should publish a valid transform between map and base link
         std::string err;
         ASSERT_TRUE(
                 tester->tf_buffer_->canTransform(tester->PARENT_FRAME, tester->CHILD_FRAME, tf2::TimePointZero, &err));
@@ -68,14 +66,18 @@ TEST(localizationTest, works) {
         EXPECT_EQ(tf.child_frame_id, tester->CHILD_FRAME);
     }
 
-    // stop the ROS nodes and clear the context
+    // stop the ROS nodes
     node_thread.first = false;
     if (node_thread.second.joinable()) node_thread.second.join();
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    rclcpp::shutdown();
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
+//TODO: add more tests
+
 int main(int argc, char **argv) {
+    rclcpp::init(0, nullptr);
     testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    const auto result = RUN_ALL_TESTS();
+    rclcpp::shutdown();
+    return result;
 }

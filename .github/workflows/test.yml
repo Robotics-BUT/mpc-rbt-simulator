@@ -1,6 +1,7 @@
 name: Tests
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  WEBOTS_CONTROLLER_PORT: 1234
 
 on:
   push:
@@ -28,20 +29,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      #TODO(webots): The final install command invokes configuration of the `keyboard-configuration` package,
-      # which will jump to a user cli input and hang indefinitely. For now this step is not required, but we will have
-      # to fix this if it becomes necessary.
-      #      - name: Install Webots
-      #        shell: bash
-      #        #NOTE: use this instead if we want to install the specific version explicitly
-      #        #wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
-      #        run: |
-      #          sudo apt update && sudo apt install wget -y
-      #          sudo mkdir -p /etc/apt/keyrings
-      #          cd /etc/apt/keyrings
-      #          sudo wget https://cyberbotics.com/Cyberbotics.asc
-      #          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
-      #          sudo apt update && sudo apt install webots -y
       - name: Install required ROS dependencies
         shell: bash
         run: |
@@ -71,19 +58,18 @@ jobs:
         with:
           fetch-depth: 1
       #TODO(webots): The final install command invokes configuration of the `keyboard-configuration` package,
-      # which will jump to a user cli input and hang indefinitely. For now this step is not required, but we will have
-      # to fix this if it becomes necessary.
-      #      - name: Install Webots
-      #        shell: bash
-      #        #NOTE: use this instead if we want to install the specific version explicitly
-      #        #wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
-      #        run: |
-      #          sudo apt update && sudo apt install wget -y
-      #          sudo mkdir -p /etc/apt/keyrings
-      #          cd /etc/apt/keyrings
-      #          sudo wget https://cyberbotics.com/Cyberbotics.asc
-      #          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
-      #          sudo apt update && sudo apt install webots -y
+      # which will jump to a user cli input and hang indefinitely.
+      - name: Install Webots
+        shell: bash
+        #NOTE: use this instead if we want to install the specific version explicitly
+        #wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb -y
+        run: |
+          sudo apt update && sudo apt install wget -y
+          sudo mkdir -p /etc/apt/keyrings
+          cd /etc/apt/keyrings
+          sudo wget https://cyberbotics.com/Cyberbotics.asc
+          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+          sudo apt update && sudo apt install webots -y
       - name: Install required ROS dependencies
         shell: bash
         run: |
@@ -92,6 +78,9 @@ jobs:
       - name: Build the ROS Package
         shell: bash
         run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
+      - name: Start the webots controller
+        shell: bash
+        run: webots --port=${{ env.WEBOTS_CONTROLLER_PORT }} --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
       - name: Run Tests
         shell: bash
         run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test --ctest-args tests
