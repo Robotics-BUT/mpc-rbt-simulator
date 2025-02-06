@@ -75,7 +75,7 @@ TEST(localizationTest, works) {
 //TODO: add more tests
 
 int main(int argc, char **argv) {
-    rclcpp::init(0, nullptr);
+    rclcpp::init(argc, argv);
     testing::InitGoogleTest(&argc, argv);
     const auto result = RUN_ALL_TESTS();
     rclcpp::shutdown();

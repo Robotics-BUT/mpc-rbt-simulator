@@ -10,7 +10,8 @@
 // and must create our own one.
 namespace webots_ros2_driver {
     WebotsNode::WebotsNode(std::string name)
-        : Node(name), mPluginLoader("webots_ros2_driver", "webots_ros2_driver::PluginInterface") {}
+        : Node(name), mSetRobotStatePublisher(false), mStep(0),
+          mPluginLoader("webots_ros2_driver", "webots_ros2_driver::PluginInterface"), mWebotsXMLElement(nullptr) {}
 }// namespace webots_ros2_driver
 
 /// Node testing interface that will connect to the Node's API for tests
@@ -161,25 +162,20 @@ TEST(tiagoDriverTest, cmdVelTimeout) {
     geometry_msgs::msg::Twist msg;
     msg.linear.x = -0.5;
     for (unsigned i = 0; i < test_iterations; ++i) {
-        RCLCPP_ERROR(tester->get_logger(), "test iteration: %d", i);
         // IF the tester publishes some non-zero velocity command messages ...
         msg.linear.x = -msg.linear.x;
-        RCLCPP_ERROR(tester->get_logger(), "publishing: %f", msg.linear.x);
         for (unsigned _ = 0; _ < publishing_iterations; ++_) {
             tester->cmd_vel_publisher_->publish(msg);
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
-        RCLCPP_ERROR(tester->get_logger(), "checking state");
         // ... THEN the robot node should end up with a non-zero velocity state ...
         {
             const std::lock_guard<std::mutex> lock(last_state.second);
             ASSERT_NE(static_cast<int>(last_state.first.velocity[0]), 0);
             ASSERT_NE(static_cast<int>(last_state.first.velocity[1]), 0);
         }
-        RCLCPP_ERROR(tester->get_logger(), "time-outing");
         // ... THEN IF no velocity command messages are published for longer that the timeout duration ...
         std::this_thread::sleep_for(std::chrono::milliseconds(3 * tester->VELOCITY_TIMEOUT_MILLIS));
-        RCLCPP_ERROR(tester->get_logger(), "checking state");
         // ... THEN the robot node should end up with a zero velocity state.
         {
             const std::lock_guard<std::mutex> lock(last_state.second);
@@ -197,7 +193,7 @@ TEST(tiagoDriverTest, cmdVelTimeout) {
 //TODO: add more tests
 
 int main(int argc, char **argv) {
-    rclcpp::init(0, nullptr);
+    rclcpp::init(argc, argv);
     testing::InitGoogleTest(&argc, argv);
     const auto result = RUN_ALL_TESTS();
     rclcpp::shutdown();
