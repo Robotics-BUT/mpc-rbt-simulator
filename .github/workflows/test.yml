@@ -22,7 +22,7 @@ jobs:
     name: Build for ${{ matrix.rosdistro }}
     runs-on: ubuntu-22.04
     container: ros:humble-ros-base-jammy
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -50,7 +50,7 @@ jobs:
     name: Run tests for ${{ matrix.rosdistro }}
     runs-on: ubuntu-22.04
     container: ros:humble-ros-base-jammy
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -83,7 +83,6 @@ jobs:
         run: |
           Xvfb :99 -screen 0 1024x768x16 &
           DEBIAN_FRONTEND=noninteractive DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=true webots --port=${{ env.WEBOTS_CONTROLLER_PORT }} --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime &
-          sleep 20
       - name: Run tests
         shell: bash
         run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && WEBOTS_CONTROLLER_PORT=${{ env.WEBOTS_CONTROLLER_PORT }} colcon test --ctest-args tests

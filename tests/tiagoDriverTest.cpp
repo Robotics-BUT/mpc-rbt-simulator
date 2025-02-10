@@ -68,17 +68,17 @@ TEST(tiagoDriverTest, works) {
                                      while ((errno != EINTR) && node_thread.first.load()) {
                                          tester->stepWebotsControllerMock();
                                          driver.step();
-                                         rclcpp::spin_some(tester);
-                                         rclcpp::spin_some(node);
+                                         rclcpp::spin_some(tester->get_node_base_interface());
+                                         rclcpp::spin_some(node->get_node_base_interface());
                                      }
                                  }));
     node_thread.second.detach();
 
     // perform logic for the test scenario
-    static constexpr unsigned test_iterations = 40;
+    static constexpr unsigned publishing_iterations = 40;
     // IF the tester publishes positive velocity command messages ...
     geometry_msgs::msg::Twist msg;
-    for (unsigned i = 0; i < test_iterations; ++i) {
+    for (unsigned i = 0; i < publishing_iterations; ++i) {
         msg.linear.x = 0.5;
         tester->cmd_vel_publisher_->publish(msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -90,7 +90,7 @@ TEST(tiagoDriverTest, works) {
         EXPECT_GT(static_cast<int>(last_state.first.velocity[1]), 0);
     }
     // ... THEN IF the tester publishes zero velocity command messages ...
-    for (unsigned i = 0; i < test_iterations; ++i) {
+    for (unsigned i = 0; i < publishing_iterations; ++i) {
         msg.linear.x = 0.0;
         tester->cmd_vel_publisher_->publish(msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -102,7 +102,7 @@ TEST(tiagoDriverTest, works) {
         EXPECT_EQ(static_cast<int>(last_state.first.velocity[1]), 0);
     }
     // ... THEN IF the tester publishes negative velocity command messages ...
-    for (unsigned i = 0; i < test_iterations; ++i) {
+    for (unsigned i = 0; i < publishing_iterations; ++i) {
         msg.linear.x = -0.5;
         tester->cmd_vel_publisher_->publish(msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -114,7 +114,7 @@ TEST(tiagoDriverTest, works) {
         EXPECT_LT(static_cast<int>(last_state.first.velocity[1]), 0);
     }
     // ... THEN IF tester publishes zero velocity command messages ...
-    for (unsigned i = 0; i < test_iterations; ++i) {
+    for (unsigned i = 0; i < publishing_iterations; ++i) {
         msg.linear.x = 0.0;
         tester->cmd_vel_publisher_->publish(msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -149,14 +149,13 @@ TEST(tiagoDriverTest, cmdVelTimeout) {
                                      while ((errno != EINTR) && node_thread.first.load()) {
                                          tester->stepWebotsControllerMock();
                                          driver.step();
-                                         rclcpp::spin_some(tester);
-                                         rclcpp::spin_some(node);
+                                         rclcpp::spin_some(tester->get_node_base_interface());
+                                         rclcpp::spin_some(node->get_node_base_interface());
                                      }
                                  }));
     node_thread.second.detach();
 
     // perform logic for the test scenario
-    //TODO: find out why this always fails if we run it for more than 3 iterations
     static constexpr unsigned test_iterations = 3;
     static constexpr unsigned publishing_iterations = 40;
     geometry_msgs::msg::Twist msg;
