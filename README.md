@@ -1,5 +1,12 @@
 # MPC-RBT Simulator
 
+<div align="center">
+
+[![Tests](https://github.com/Robotics-BUT/mpc-rbt-simulator/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Robotics-BUT/mpc-rbt-simulator/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</div>
+
 This ROS 2 package embodies a Webots-based simulation environment for the lab tasks of the MPC-RBT course. The simulated scenario involves a small warehouse equipped with a compact mobile robot to fulfill tasks such as pick-and-place operations. The overall goal is to tackle basic challenges in mobile robotics, including self-localization, path planning, and motion control, as well as to become familiar with both the ROS 2 framework and the Webots simulator.
 
 ![The simulated warehouse](media/warehouse.jpg)
