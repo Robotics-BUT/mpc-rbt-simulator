@@ -20,8 +20,6 @@ public:
             std::unordered_map<std::string, std::string> &parameters) override;
 
 private:
-  const rclcpp::Duration MESSAGE_TIMEOUT = rclcpp::Duration::from_seconds(1);
-
   void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
   //TODO(message-timeout): change this if we encounter problems with the measurement (ROS time?, raw simulation time?)
   inline static rclcpp::Time getCurrentTime() { return rclcpp::Clock(RCL_STEADY_TIME).now(); }
@@ -32,6 +30,7 @@ private:
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr
       cmd_vel_subscriber_;
 
+  rclcpp::Duration cmd_vel_timeout_ = rclcpp::Duration::from_seconds(1.0);
   //TODO(message-timeout): if we start using TwistStamped instead, we won't have to define this additional variable
   rclcpp::Time last_received_cmd_vel_ = getCurrentTime();
   geometry_msgs::msg::Twist cmd_vel_msg_;

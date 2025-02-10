@@ -29,6 +29,9 @@ void TiagoDriver::init(
   wb_position_sensor_enable(right_motor_sensor_, 10);
   wb_position_sensor_enable(left_motor_sensor_, 10);
 
+  node_->declare_parameter("cmd_vel_timeout_seconds", rclcpp::ParameterValue(1.0));
+  cmd_vel_timeout_ = rclcpp::Duration::from_seconds(node_->get_parameter("cmd_vel_timeout_seconds").as_double());
+
   cmd_vel_subscriber_ = node->create_subscription<geometry_msgs::msg::Twist>(
       "cmd_vel", rclcpp::SensorDataQoS().reliable(),
       std::bind(&TiagoDriver::cmdVelCallback, this, std::placeholders::_1));
@@ -51,7 +54,7 @@ void TiagoDriver::cmdVelCallback(
 void TiagoDriver::step() {
 
   // control timeout - reset cmd_vel if a new message was not received within the MESSAGE_TIMEOUT period
-  if ((getCurrentTime() - last_received_cmd_vel_) > MESSAGE_TIMEOUT) cmd_vel_msg_ = geometry_msgs::msg::Twist{};
+  if ((getCurrentTime() - last_received_cmd_vel_) > cmd_vel_timeout_) cmd_vel_msg_ = geometry_msgs::msg::Twist{};
 
   // inverse Kinematics - compute the motor speeds based on the cmd_vel
   auto forward_speed = cmd_vel_msg_.linear.x;

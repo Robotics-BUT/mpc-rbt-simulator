@@ -19,8 +19,10 @@ class TiagoDriverTester : public rclcpp::Node {
 public:
     static constexpr auto ROBOT_NAME = "tiago_base";
     const std::pair<const char *const, std::string> WEBOTS_CONTROLLER_URL{
-            "WEBOTS_CONTROLLER_URL", std::string("ipc://") + getenv("WEBOTS_CONTROLLER_PORT") + '/' + ROBOT_NAME};
-    static constexpr uint64_t VELOCITY_TIMEOUT_MILLIS = 1000;
+            "WEBOTS_CONTROLLER_URL",
+            std::string("ipc://") + (!getenv("WEBOTS_CONTROLLER_PORT") ? "1234" : getenv("WEBOTS_CONTROLLER_PORT")) +
+                    '/' + ROBOT_NAME};
+    static constexpr uint64_t DEFAULT_CMD_VEL_TIMEOUT_MILLIS = 1000;
 
     explicit TiagoDriverTester(std::function<void(sensor_msgs::msg::JointState::SharedPtr)> state_callback)
         : Node("tiago_driver_tester"), state_callback_(std::move(state_callback)) {
@@ -174,7 +176,7 @@ TEST(tiagoDriverTest, cmdVelTimeout) {
             ASSERT_NE(static_cast<int>(last_state.first.velocity[1]), 0);
         }
         // ... THEN IF no velocity command messages are published for longer that the timeout duration ...
-        std::this_thread::sleep_for(std::chrono::milliseconds(3 * tester->VELOCITY_TIMEOUT_MILLIS));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3 * tester->DEFAULT_CMD_VEL_TIMEOUT_MILLIS));
         // ... THEN the robot node should end up with a zero velocity state.
         {
             const std::lock_guard<std::mutex> lock(last_state.second);
