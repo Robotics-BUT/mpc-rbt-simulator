@@ -1,0 +1,91 @@
+name: Tests
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  WEBOTS_CONTROLLER_PORT: 1234
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified,
+      # decide how to actually utilize this better (have just one job and use a build/test/launch matrix instead?)
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Build for ${{ matrix.rosdistro }}
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base-jammy
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Install required ROS dependencies
+        shell: bash
+        run: |
+          sudo apt update && rosdep update
+          rosdep install --from-paths ./ --ignore-src -r -y
+      - name: Build the ROS package
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
+
+  test:
+    needs: [ build ]
+    strategy:
+      fail-fast: false
+      #TODO(matrix): this is here only because the strategy requires some matrix to be specified,
+      # decide how to actually utilize this better (have just one job and use a build/test/launch matrix instead?)
+      matrix:
+        rosdistro: [ humble ]
+
+    name: Run tests for ${{ matrix.rosdistro }}
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base-jammy
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Install webots
+        shell: bash
+        run: |
+          sudo apt update && sudo apt install wget xvfb -y
+          wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo DEBIAN_FRONTEND=noninteractive apt install ./webots_2023b_amd64.deb -y
+      #NOTE: use this to always install the latest available version
+      #        run: |
+      #          sudo apt update && sudo apt install wget xvfb -y
+      #          sudo mkdir -p /etc/apt/keyrings
+      #          cd /etc/apt/keyrings
+      #          sudo wget https://cyberbotics.com/Cyberbotics.asc
+      #          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+      #          sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install webots -y
+      - name: Install required ROS dependencies
+        shell: bash
+        run: |
+          sudo apt update && rosdep update
+          rosdep install --from-paths ./ --ignore-src -r -y
+      - name: Build the ROS package
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon build
+      - name: Start webots controller
+        shell: bash
+        run: |
+          Xvfb :99 -screen 0 1024x768x16 &
+          DEBIAN_FRONTEND=noninteractive DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=true webots --port=${{ env.WEBOTS_CONTROLLER_PORT }} --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime &
+      - name: Run tests
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && WEBOTS_CONTROLLER_PORT=${{ env.WEBOTS_CONTROLLER_PORT }} colcon test --ctest-args tests
+      - name: Show test results
+        shell: bash
+        run: source /opt/ros/${{ matrix.rosdistro }}/setup.bash && colcon test-result --verbose --all

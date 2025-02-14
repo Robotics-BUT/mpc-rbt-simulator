@@ -1,4 +1,5 @@
 #include "mpc-rbt-simulator/Localization.hpp"
+#include "mpc-rbt-simulator/RobotConfig.hpp"
 
 LocalizationNode::LocalizationNode() : rclcpp::Node("localization_node") {
     joint_subscriber_ = this->create_subscription<sensor_msgs::msg::JointState>(
@@ -34,12 +35,4 @@ void LocalizationNode::jointCallback(const sensor_msgs::msg::JointState & msg) {
 
     tf_broadcaster_->sendTransform(t);
 
-}
-
-int main(int argc, char * argv[])
-{
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<LocalizationNode>());
-  rclcpp::shutdown();
-  return 0;
 }

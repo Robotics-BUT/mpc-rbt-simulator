@@ -5,6 +5,10 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
+# Enforce stricter compilation rules
+add_compile_options(-Wall -Wextra -Wpedantic)
+
+# Make sure all required dependencies are locatable
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
@@ -19,18 +23,14 @@ find_package(nav2_lifecycle_manager REQUIRED)
 # Export the plugin configuration file
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
 
-add_library(
-  ${PROJECT_NAME}
-  SHARED
+# Define include directories for the compiler
+include_directories(include)
+
+# Build and install libraries
+add_library(${PROJECT_NAME} SHARED
   src/TiagoDriver.cpp
 )
-target_include_directories(
-  ${PROJECT_NAME}
-  PRIVATE
-  include
-)
-ament_target_dependencies(
-  ${PROJECT_NAME}
+ament_target_dependencies(${PROJECT_NAME}
   pluginlib
   rclcpp
   webots_ros2_driver
@@ -42,22 +42,32 @@ install(TARGETS
   RUNTIME DESTINATION bin
 )
 
-ament_export_include_directories(
-  include
+add_library(${PROJECT_NAME}-solutions SHARED
+  src/Localization.cpp
 )
-ament_export_libraries(
-  ${PROJECT_NAME}
+ament_target_dependencies(${PROJECT_NAME}-solutions
+  rclcpp
+  sensor_msgs
+  geometry_msgs
+  tf2
+  tf2_ros
+)
+install(TARGETS
+  ${PROJECT_NAME}-solutions
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
-include_directories(include)
-
-add_executable(localization src/Localization.cpp)
-ament_target_dependencies(localization rclcpp sensor_msgs geometry_msgs tf2 tf2_ros)
-
+# Build and install executables
+add_executable(localization src/localization_node.cpp)
+target_link_libraries(localization ${PROJECT_NAME}-solutions)
 install(TARGETS
   localization
-  DESTINATION lib/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME}
+)
 
+# Install additional directories and files
 install(DIRECTORY
   launch
   maps
@@ -67,4 +77,27 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/
 )
 
+# Set up testing
+#TODO(linting): enable linting tests only if we want to enforce strict ROS code formatting, otherwise they will fail
+if (BUILD_TESTING)
+  #    find_package(ament_lint_auto REQUIRED)
+  find_package(ament_cmake_gtest REQUIRED)
+  #    ament_lint_auto_find_test_dependencies()
+  enable_testing()
+
+  add_subdirectory(tests)
+endif ()
+
+# ROS exports
+ament_export_include_directories(include)
+ament_export_dependencies(
+  pluginlib
+  rclcpp
+  webots_ros2_driver
+  sensor_msgs
+  geometry_msgs
+  tf2
+  tf2_ros
+)
+ament_export_libraries(${PROJECT_NAME} ${PROJECT_NAME}-solutions)
 ament_package()

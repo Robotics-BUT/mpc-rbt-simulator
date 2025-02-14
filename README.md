@@ -1,5 +1,12 @@
 # MPC-RBT Simulator
 
+<div align="center">
+
+[![Tests](https://github.com/Robotics-BUT/mpc-rbt-simulator/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Robotics-BUT/mpc-rbt-simulator/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</div>
+
 This ROS 2 package embodies a Webots-based simulation environment for the lab tasks of the MPC-RBT course. The simulated scenario involves a small warehouse equipped with a compact mobile robot to fulfill tasks such as pick-and-place operations. The overall goal is to tackle basic challenges in mobile robotics, including self-localization, path planning, and motion control, as well as to become familiar with both the ROS 2 framework and the Webots simulator.
 
 ![The simulated warehouse](media/warehouse.jpg)
@@ -119,6 +126,32 @@ Launch the project (including the simulation) using:
 
 ```
 ros2 launch mpc-rbt-simulator simulation.launch.py
+```
+
+## Testing
+
+Navigate to the workspace root directory (`mpc-rbt_ws`) and build it:
+
+```
+colcon build
+```
+
+Spawn the simulation with the robot controller using:
+
+```
+webots --port=1234 --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
+```
+>**NOTE**: If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
+
+Run tests using:
+
+```
+WEBOTS_CONTROLLER_PORT=1234 colcon test --ctest-args tests
+```
+
+View the results using:
+```
+colcon test-result --verbose --all
 ```
 
 ## TODO
