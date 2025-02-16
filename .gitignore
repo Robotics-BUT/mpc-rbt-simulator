@@ -2,6 +2,7 @@
 .idea/
 
 cmake-build-*
+vscode-build/
 build/
 install/
 log/
