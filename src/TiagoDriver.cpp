@@ -1,18 +1,19 @@
-#include "mpc-rbt-simulator/TiagoDriver.hpp"
-#include "mpc-rbt-simulator/RobotConfig.hpp"
-
-#include "rclcpp/rclcpp.hpp"
 #include <cstdio>
 #include <functional>
+
+#include <rclcpp/rclcpp.hpp>
 
 #include <webots/motor.h>
 #include <webots/robot.h>
 #include <webots/position_sensor.h>
 
+#include <mpc-rbt-simulator/TiagoDriver.hpp>
+#include <mpc-rbt-simulator/RobotConfig.hpp>
+
 namespace tiago_driver {
 void TiagoDriver::init(
     webots_ros2_driver::WebotsNode *node,
-    std::unordered_map<std::string, std::string> &parameters) {
+    std::unordered_map<std::string, std::string> &) {
 
   node_ = node;
   time_step_ = wb_robot_get_basic_time_step();
