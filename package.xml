@@ -5,6 +5,7 @@
   <version>0.0.0</version>
   <description>This package includes the Webots simulation environment for the MPC-MAP course.</description>
   <maintainer email="gabrlik@vut.cz">Petr Gabrlik</maintainer>
+  <maintainer email="tomas.horelican@vut.cz">Tomas Horelican</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

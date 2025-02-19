@@ -24,7 +24,9 @@ find_package(nav2_lifecycle_manager REQUIRED)
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
 
 # Define include directories for the compiler
-include_directories(include)
+include_directories(PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
 
 # Build and install libraries
 add_library(${PROJECT_NAME} SHARED
@@ -42,30 +44,8 @@ install(TARGETS
   RUNTIME DESTINATION bin
 )
 
-add_library(${PROJECT_NAME}-solutions SHARED
-  src/Localization.cpp
-)
-ament_target_dependencies(${PROJECT_NAME}-solutions
-  rclcpp
-  sensor_msgs
-  geometry_msgs
-  tf2
-  tf2_ros
-)
-install(TARGETS
-  ${PROJECT_NAME}-solutions
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-# Build and install executables
-add_executable(localization src/localization_node.cpp)
-target_link_libraries(localization ${PROJECT_NAME}-solutions)
-install(TARGETS
-  localization
-  DESTINATION lib/${PROJECT_NAME}
-)
+# must export include if this library is used in other projects
+install(DIRECTORY include/ DESTINATION include/)
 
 # Install additional directories and files
 install(DIRECTORY
@@ -99,5 +79,5 @@ ament_export_dependencies(
   tf2
   tf2_ros
 )
-ament_export_libraries(${PROJECT_NAME} ${PROJECT_NAME}-solutions)
+ament_export_libraries(${PROJECT_NAME})
 ament_package()
