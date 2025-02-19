@@ -13,12 +13,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav2_map_server REQUIRED)
 find_package(nav2_lifecycle_manager REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 # Export the plugin configuration file
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
@@ -42,18 +44,20 @@ install(TARGETS
   RUNTIME DESTINATION bin
 )
 
-add_library(${PROJECT_NAME}-solutions SHARED
+add_library(${PROJECT_NAME}-localization SHARED
   src/Localization.cpp
 )
-ament_target_dependencies(${PROJECT_NAME}-solutions
+ament_target_dependencies(${PROJECT_NAME}-localization
   rclcpp
   sensor_msgs
   geometry_msgs
+  nav_msgs
   tf2
   tf2_ros
+  tf2_geometry_msgs
 )
 install(TARGETS
-  ${PROJECT_NAME}-solutions
+  ${PROJECT_NAME}-localization
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -61,7 +65,9 @@ install(TARGETS
 
 # Build and install executables
 add_executable(localization src/localization_node.cpp)
-target_link_libraries(localization ${PROJECT_NAME}-solutions)
+target_link_libraries(localization 
+  ${PROJECT_NAME}-localization
+)
 install(TARGETS
   localization
   DESTINATION lib/${PROJECT_NAME}
@@ -95,9 +101,11 @@ ament_export_dependencies(
   rclcpp
   webots_ros2_driver
   sensor_msgs
+  nav_msgs
   geometry_msgs
   tf2
   tf2_ros
 )
-ament_export_libraries(${PROJECT_NAME} ${PROJECT_NAME}-solutions)
+ament_export_libraries(${PROJECT_NAME} 
+  ${PROJECT_NAME}-localization)
 ament_package()

@@ -3,7 +3,6 @@
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/Floor.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/pal_robotics/tiago_base/protos/TiagoBase.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/CardboardBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/hokuyo/protos/HokuyoUrg04lxug01.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/apartment_structure/protos/Wall.proto"
@@ -12,7 +11,30 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/unimation/puma/protos/Puma560.proto"
 
+EXTERNPROTO "../resources/proto/TiagoBase.proto"
 WorldInfo {
+  title "MPC-RBT Simulator"
+  basicTimeStep 20
+  contactProperties [
+    ContactProperties {
+      material1 "robot_basis"
+      material2 "default"
+      coulombFriction [ -1 ]
+      forceDependentSlip [ 0 ]
+      maxContactJoints 2
+    }
+    ContactProperties {
+      material1 "castor"
+      material2 "default"
+      coulombFriction [
+        -0
+      ]
+      forceDependentSlip [
+      0
+      ]
+      maxContactJoints 2
+    }
+  ]
 }
 Viewpoint {
   orientation -0.5052139421960968 0.5052144920037264 0.6996550504928093 1.9206083938660308
@@ -53,7 +75,7 @@ Wall {
   size 14.2 0.2 2
 }
 TiagoBase {
-  translation 0 2.5 0.095
+  translation -0.5 0.0 0.095
   name "tiago_base"
   controller "<extern>"
   lidarSlot [
@@ -379,3 +401,5 @@ CardboardBox {
   name "cardboard box(55)"
   size 0.5 0.5 0.5
 }
+
+

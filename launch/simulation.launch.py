@@ -28,7 +28,7 @@ def generate_launch_description():
         # namespace='tiago_base',
         parameters=[
             {'robot_description': robot_description_path},
-            {'cmd_vel_timeout_seconds': 1.0},
+            {'cmd_vel_timeout_seconds': 0.1},
         ]
     )
 
