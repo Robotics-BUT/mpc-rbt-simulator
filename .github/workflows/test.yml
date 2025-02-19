@@ -2,6 +2,7 @@ name: Tests
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   WEBOTS_CONTROLLER_PORT: 1234
+  ROBOT_INIT_POSITION: "0 2.5 0.095"
 
 on:
   push:
@@ -81,6 +82,7 @@ jobs:
       - name: Start webots controller
         shell: bash
         run: |
+          sed -i "/TiagoBase {/,/translation/ s/translation.*/translation ${{ env.ROBOT_INIT_POSITION }}/" ./worlds/mpc-rbt-warehouse.wbt
           Xvfb :99 -screen 0 1024x768x16 &
           DEBIAN_FRONTEND=noninteractive DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=true webots --port=${{ env.WEBOTS_CONTROLLER_PORT }} --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime &
       - name: Run tests
