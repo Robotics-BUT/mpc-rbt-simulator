@@ -1,11 +1,24 @@
 <?xml version="1.0"?>
-<robot name="/home/petr/devel/webots_ws/src/my_package/resource/TiagoBase.urdf" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="TiagoBase" xmlns:xacro="http://ros.org/wiki/xacro">
+  <material name="white">
+     <color rgba="0.98 0.98 0.98 1"/>
+  </material>
+
+  <material name="orange">
+     <color rgba="0.85 0.57 0.08 1"/>
+  </material>
+
+  <material name="black">
+     <color rgba="0.1 0.1 0.1 1"/>
+  </material>
+
   <link name="base_link">
     <visual>
       <origin xyz="0 0 0.06" rpy="0 0 0"/>
       <geometry>
         <cylinder radius="0.265" length="0.276"/>
       </geometry>
+      <material name="white"/>
     </visual>
     <collision>
       <origin xyz="0 0 0.06" rpy="0 0 0"/>
@@ -211,6 +224,7 @@
       <geometry>
         <cylinder radius="0.0985" length="0.04"/>
       </geometry>
+      <material name="black"/>
     </visual>
     <collision>
       <origin xyz="0 0 0.0002" rpy="0 0 0"/>
@@ -232,6 +246,7 @@
       <geometry>
         <cylinder radius="0.0985" length="0.04"/>
       </geometry>
+      <material name="black"/>
     </visual>
     <collision>
       <origin xyz="0 0 -0.0002" rpy="0 0 0"/>
@@ -267,6 +282,7 @@
       <geometry>
         <cylinder radius="0.272" length="0.086"/>
       </geometry>
+      <material name="orange"/>
     </visual>
     <collision>
       <origin xyz="0 0 0.043" rpy="0 0 0"/>
