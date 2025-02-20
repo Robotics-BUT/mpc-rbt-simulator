@@ -1,10 +1,10 @@
-#include <gtest/gtest.h>
+#include <utility>
 
-#include <mpc-rbt-simulator/TiagoDriver.hpp>
+#include <gtest/gtest.h>
 
 #include <webots/robot.h>
 
-#include <utility>
+#include <mpc-rbt-simulator/TiagoDriver.hpp>
 
 //NOTE: WebotsNode is not compiled as a library, but only as an executable, so we don't actually have access to the definition
 // and must create our own one.

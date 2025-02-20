@@ -11,7 +11,7 @@ This ROS 2 package embodies a Webots-based simulation environment for the lab ta
 
 ![The simulated warehouse](media/warehouse.jpg)
 
-TODO: add some details (robot model, senosrs etc)
+> TODO: add some details (robot model, sensors etc)
 
 ## Installation
 
@@ -19,37 +19,37 @@ To run the project (use this package) various software requirements must be met.
 
 ### Ubuntu
 
-The project requires Ubuntu 22.04 LTS. Follow the official installation guide to install it:
+The project requires the `Ubuntu 22.04 LTS` Linux distribution. Follow the official installation guide to install it:
 
 https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview
 
-**Warning:** proceed carefully to prevent possible data loss in case of installation on a PC/Laptop with another operating system. 
+> **Warning:** Proceed carefully to prevent possible data loss in case of installation on a PC/Laptop with another operating system.
 
 ### ROS 2
 
-The key software framework used in this project is ROS 2 Humble. To install it from pre-build binary package follow this official guide:
+The key software framework used in this project is `ROS 2 Humble`. To install it from a pre-built binary package, follow this official guide:
 
 https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Install-Binary.html
 
 ### Webots
 
-Webots is the desktop application used to simulate robots and environment in this project. It requires Webots 2023b version. One way to install it is to download `webots_2023b_amd64.deb` package from the release page:
+Webots is the desktop application used to simulate robots and the environment in this project. It requires Webots version `2023b`. One way to install it is to download the pre-built `webots_2023b_amd64.deb` package from the release page:
 
 https://github.com/cyberbotics/webots/releases/tag/R2023b
 
-And install it from the same directory using:
+And install it from the same directory manually using:
 
 ```
 wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb
 ```
 
-Another options are listed here:
+Another option is to set up pre-built binary installation from remote `apt` repositories. All installation options can be found here:
 
 https://cyberbotics.com/doc/guide/installation-procedure?tab-os=linux#installation-on-linux
 
 ### ROS 2 Workspace
 
-ROS 2 workspace is represented by a directory, `mpc-rbt_ws` for example, and packages are typically located in the `src` subdirectory. Navigate to the desired location and create them:
+A ROS 2 workspace is represented by a directory, `mpc-rbt_ws` for example, and packages are typically located in the `src` subdirectory (additional directories `build`, `install`, `log` will be created after compilation). Navigate to the desired location and prepare your workspace:
 
 ```
 mkdir mpc-rbt_ws
@@ -59,39 +59,38 @@ mkdir src
 
 ### MPC-RBT Simulator
 
-This repository embodies a ROS 2 package. Navigate to the `mpc-rbt_ws/src` and clone it:
+This repository embodies a single ROS 2 package. Navigate to the workspace `src` directory (`mpc-rbt_ws/src`) and clone this repository:
 
 ```
 git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git
 ```
 
-Package dependencies (mostly another ROS 2 packages) are listed in the `package.xml` and can be installed either manually (from source or binary) or automatically via `rosdep` utility.
+Package dependencies (mostly other ROS 2 packages) are listed in `package.xml` and can be installed either manually (from source or binary) or automatically via the `rosdep` utility.
 
-Install the `rosdep` (if necessary):
+Install `rosdep` (if necessary):
 
 ```
 apt-get install python3-rosdep
 ```
 
-Initialize it and update rosdistro index:
+Initialize it and update the rosdistro index:
 
 ```
 sudo rosdep init
 rosdep update
 ```
 
-Install the dependencies using the following command from the workspace root directory:
+Install all dependencies using the following command from the workspace root directory (`mpc-rbt_ws`):
 
 ```
-rosdep install --from-paths src -y --ignore-src --rosdistro humble
+rosdep install --from-paths src -y -r --ignore-src --rosdistro humble
 ```
 
-Most of the dependencies are a common part of the ROS distribution. The exception is the package `webots_ros2_driver` which is necessary to connect the ROS 2 and Webots simulator.
-
+Most of the dependencies are a common part of the ROS 2 distribution. An exception is the package `webots_ros2_driver`, which is necessary to connect ROS 2 and the Webots simulator.
 
 ### Visual Studio Code
 
-Any IDE may be used to work on this projet. Visual Studio Code, for example, is a good choice. To install it, download `.deb` package from the official website:
+Any IDE may be used to work on this projet. Visual Studio Code, for example, is a good choice. To install it, download its `.deb` package from the official website:
 
 https://code.visualstudio.com/
 
@@ -100,7 +99,6 @@ Install it from the same directory using:
 ```
 sudo apt install ./<file>.deb
 ```
-
 
 ## Package Structure
 
@@ -153,19 +151,3 @@ View the results using:
 ```
 colcon test-result --verbose --all
 ```
-
-## TODO
-
-- Create a static 2D map (occupancy grid) for given world for the path planning purposes OR create an automatic converter .wbt -> .pgm (occupancy grid)
-- Add a map server to provide a static map for path planning a rviz visualization
-- Implement robot stop if the driver doesn't receive cmd_vel messages
-- Prepare templates (source files, nodes..) for students for the individual tasks, eg localization, path planning..
-- Validate robot parameters - wheel radius and distance
-- Remove unnecessary topics
-- Running the project in labs: ROS_DOMAIN_ID per student / ROS_LOCALHOST_ONLY; where to store student work (GitHub/locally/..)?
-- Create documentation (install, usage..)
-
-## Issues
-
-- Fix and simplify the robot .urdf model - some transforms don't exist (casters), some frames aren't necessary.
-- Fix namespaces - some topics already have /tiago_base namespace provided by Webots 

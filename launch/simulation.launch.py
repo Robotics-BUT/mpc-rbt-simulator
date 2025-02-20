@@ -32,12 +32,6 @@ def generate_launch_description():
         ]
     )
 
-    localization_node = Node(
-        package='mpc-rbt-simulator',
-        executable='localization',
-        output='screen'
-    )
-
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -85,7 +79,6 @@ def generate_launch_description():
         webots,
         webots._supervisor,
         tiago_driver,
-        localization_node,
         robot_state_publisher_node,
         rviz_node,
         map_server_node,
