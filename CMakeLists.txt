@@ -13,14 +13,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_ros REQUIRED)
 find_package(nav2_map_server REQUIRED)
 find_package(nav2_lifecycle_manager REQUIRED)
-find_package(tf2_geometry_msgs REQUIRED)
 
 # Export the plugin configuration file
 pluginlib_export_plugin_description_file(webots_ros2_driver tiago_driver_plugin.xml)
@@ -31,14 +27,17 @@ include_directories(PUBLIC
         $<INSTALL_INTERFACE:include>)
 
 # Build and install libraries
-add_library(${PROJECT_NAME} SHARED
-  src/TiagoDriver.cpp
-)
-ament_target_dependencies(${PROJECT_NAME}
+set(dependencies
   pluginlib
   rclcpp
   webots_ros2_driver
+  sensor_msgs
+  geometry_msgs
 )
+add_library(${PROJECT_NAME} SHARED
+  src/TiagoDriver.cpp
+)
+ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 install(TARGETS
   ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
@@ -71,16 +70,6 @@ endif ()
 
 # ROS exports
 ament_export_include_directories(include)
-ament_export_dependencies(
-  pluginlib
-  rclcpp
-  webots_ros2_driver
-  sensor_msgs
-  nav_msgs
-  geometry_msgs
-  tf2
-  tf2_ros
-)
-
+ament_export_dependencies(${dependencies})
 ament_export_libraries(${PROJECT_NAME})
 ament_package()
