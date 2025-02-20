@@ -12,7 +12,6 @@ def generate_launch_description():
     package_dir = get_package_share_directory('mpc-rbt-simulator')
     robot_description_path = os.path.join(package_dir, 'resources', 'tiago_plugin.urdf')
     tiago_description_path = os.path.join(package_dir, 'resources', 'tiago_model_ros.urdf')
-    rviz_config_path = os.path.join(package_dir, 'rviz', 'config.rviz')
     map_file_path = os.path.join(package_dir, 'maps', 'map.yaml')
 
     tiago_description_content = Command(['xacro ', tiago_description_path])
@@ -39,14 +38,6 @@ def generate_launch_description():
         parameters=[tiago_description]
     )
 
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        arguments=['-d', rviz_config_path],
-        output='screen'
-    )
-    
     map_server_node = Node(
         package='nav2_map_server',
         executable='map_server',
@@ -80,7 +71,6 @@ def generate_launch_description():
         webots._supervisor,
         tiago_driver,
         robot_state_publisher_node,
-        rviz_node,
         map_server_node,
         lifecycle_manager_node,
         launch.actions.RegisterEventHandler(

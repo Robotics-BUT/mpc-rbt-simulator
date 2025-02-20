@@ -55,7 +55,6 @@ install(DIRECTORY
   maps
   resources
   worlds
-  rviz
   DESTINATION share/${PROJECT_NAME}/
 )
 
