@@ -59,10 +59,16 @@ mkdir src
 
 ### MPC-RBT Simulator
 
-This repository embodies a single ROS 2 package. Navigate to the workspace `src` directory (`mpc_rbt_ws/src`) and clone this repository:
+This repository embodies a single ROS 2 package. Navigate to the workspace directory (`mpc_rbt_ws`) and clone this repository:
 
 ```
-git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git mpc_rbt_simulator
+git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+```
+
+or:
+
+```
+git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
 ```
 
 Package dependencies (mostly other ROS 2 packages) are listed in `package.xml` and can be installed either manually (from source or binary) or automatically via the `rosdep` utility.
@@ -80,7 +86,7 @@ sudo rosdep init
 rosdep update
 ```
 
-Install all dependencies using the following command from the workspace root directory (`mpc_rbt_ws`):
+Install all dependencies using the following command:
 
 ```
 rosdep install --from-paths src -y -r --ignore-src --rosdistro humble
@@ -108,7 +114,7 @@ TODO
 
 TODO
 
-Navigate to the workspace root directory (`mpc_rbt_ws`) and build it:
+Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 
 ```
 colcon build
@@ -128,18 +134,21 @@ ros2 launch mpc_rbt_simulator simulation.launch.py
 
 ## Testing
 
-Navigate to the workspace root directory (`mpc_rbt_ws`) and build it:
+Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 
 ```
 colcon build
 ```
 
+Change the initial robot position in `src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt` to `0 2.5 0.095` by modifying the `translation` parameter in `TiagoBase`.
+
 Spawn the simulation with the robot controller using:
 
 ```
-webots --port=1234 --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
+webots --port=1234 --no-rendering --stdout --stderr --minimize ./src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
 ```
->**NOTE**: If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
+> [!NOTE]
+> If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
 
 Run tests using:
 
