@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(mpc-rbt-simulator)
+project(mpc_rbt_simulator)
 
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
