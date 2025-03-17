@@ -9,7 +9,7 @@ from webots_ros2_driver.webots_controller import WebotsController
 
 
 def generate_launch_description():
-    package_dir = get_package_share_directory('mpc-rbt-simulator')
+    package_dir = get_package_share_directory('mpc_rbt_simulator')
     robot_description_path = os.path.join(package_dir, 'resources', 'tiago_plugin.urdf')
     tiago_description_path = os.path.join(package_dir, 'resources', 'tiago_model_ros.urdf')
     map_file_path = os.path.join(package_dir, 'maps', 'map.yaml')

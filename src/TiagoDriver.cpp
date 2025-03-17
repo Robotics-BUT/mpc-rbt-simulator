@@ -7,8 +7,8 @@
 #include <webots/robot.h>
 #include <webots/position_sensor.h>
 
-#include <mpc-rbt-simulator/TiagoDriver.hpp>
-#include <mpc-rbt-simulator/RobotConfig.hpp>
+#include <mpc_rbt_simulator/TiagoDriver.hpp>
+#include <mpc_rbt_simulator/RobotConfig.hpp>
 
 namespace tiago_driver {
 void TiagoDriver::init(

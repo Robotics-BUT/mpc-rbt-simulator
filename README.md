@@ -49,20 +49,26 @@ https://cyberbotics.com/doc/guide/installation-procedure?tab-os=linux#installati
 
 ### ROS 2 Workspace
 
-A ROS 2 workspace is represented by a directory, `mpc-rbt_ws` for example, and packages are typically located in the `src` subdirectory (additional directories `build`, `install`, `log` will be created after compilation). Navigate to the desired location and prepare your workspace:
+A ROS 2 workspace is represented by a directory, `mpc_rbt_ws` for example, and packages are typically located in the `src` subdirectory (additional directories `build`, `install`, `log` will be created after compilation). Navigate to the desired location and prepare your workspace:
 
 ```
-mkdir mpc-rbt_ws
-cd mpc-rbt_ws
+mkdir mpc_rbt_ws
+cd mpc_rbt_ws
 mkdir src
 ```
 
 ### MPC-RBT Simulator
 
-This repository embodies a single ROS 2 package. Navigate to the workspace `src` directory (`mpc-rbt_ws/src`) and clone this repository:
+This repository embodies a single ROS 2 package. Navigate to the workspace directory (`mpc_rbt_ws`) and clone this repository:
 
 ```
-git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git
+git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+```
+
+or:
+
+```
+git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
 ```
 
 Package dependencies (mostly other ROS 2 packages) are listed in `package.xml` and can be installed either manually (from source or binary) or automatically via the `rosdep` utility.
@@ -80,7 +86,7 @@ sudo rosdep init
 rosdep update
 ```
 
-Install all dependencies using the following command from the workspace root directory (`mpc-rbt_ws`):
+Install all dependencies using the following command:
 
 ```
 rosdep install --from-paths src -y -r --ignore-src --rosdistro humble
@@ -108,7 +114,7 @@ TODO
 
 TODO
 
-Navigate to the workspace root directory (`mpc-rbt_ws`) and build it:
+Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 
 ```
 colcon build
@@ -123,23 +129,26 @@ source install/setup.bash
 Launch the project (including the simulation) using:
 
 ```
-ros2 launch mpc-rbt-simulator simulation.launch.py
+ros2 launch mpc_rbt_simulator simulation.launch.py
 ```
 
 ## Testing
 
-Navigate to the workspace root directory (`mpc-rbt_ws`) and build it:
+Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 
 ```
 colcon build
 ```
 
+Change the initial robot position in `src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt` to `0 2.5 0.095` by modifying the `translation` parameter in `TiagoBase`.
+
 Spawn the simulation with the robot controller using:
 
 ```
-webots --port=1234 --no-rendering --stdout --stderr --minimize ./worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
+webots --port=1234 --no-rendering --stdout --stderr --minimize ./src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
 ```
->**NOTE**: If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
+> [!NOTE]
+> If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
 
 Run tests using:
 
