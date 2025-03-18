@@ -23,7 +23,8 @@ The project requires the `Ubuntu 22.04 LTS` Linux distribution. Follow the offic
 
 https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview
 
-> **Warning:** Proceed carefully to prevent possible data loss in case of installation on a PC/Laptop with another operating system.
+> [!Warning]
+> Proceed carefully to prevent possible data loss in case of installation on a PC/Laptop with another operating system.
 
 ### ROS 2
 
@@ -49,26 +50,25 @@ https://cyberbotics.com/doc/guide/installation-procedure?tab-os=linux#installati
 
 ### ROS 2 Workspace
 
-A ROS 2 workspace is represented by a directory, `mpc_rbt_ws` for example, and packages are typically located in the `src` subdirectory (additional directories `build`, `install`, `log` will be created after compilation). Navigate to the desired location and prepare your workspace:
+A ROS 2 workspace is represented by a directory (e.g., `mpc_rbt_ws`), and packages are typically located in the `src` subdirectory (additional directories `build`, `install`, `log` will be created after compilation). Navigate to the desired location and prepare your workspace:
 
 ```
-mkdir mpc_rbt_ws
+mkdir mpc_rbt_ws mpc_rbt_ws/src
 cd mpc_rbt_ws
-mkdir src
 ```
 
 ### MPC-RBT Simulator
 
-This repository embodies a single ROS 2 package. Navigate to the workspace directory (`mpc_rbt_ws`) and clone this repository:
+This repository embodies a single ROS 2 package. Navigate to the workspace directory (`mpc_rbt_ws`) and clone this repository into its `src` subdirectory using the following command:
 
 ```
-git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
 ```
 
 or:
 
 ```
-git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
 ```
 
 Package dependencies (mostly other ROS 2 packages) are listed in `package.xml` and can be installed either manually (from source or binary) or automatically via the `rosdep` utility.
@@ -111,8 +111,6 @@ sudo apt install ./<file>.deb
 TODO
 
 ## Usage
-
-TODO
 
 Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 
