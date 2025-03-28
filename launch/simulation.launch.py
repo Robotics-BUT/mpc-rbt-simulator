@@ -26,6 +26,7 @@ def generate_launch_description():
         robot_name='tiago_base',
         # namespace='tiago_base',
         parameters=[
+            {'use_sim_time': True},
             {'robot_description': robot_description_path},
             {'cmd_vel_timeout_seconds': 0.1},
         ]
@@ -35,7 +36,7 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[tiago_description]
+        parameters=[tiago_description, {'use_sim_time': True}]
     )
 
     map_server_node = Node(
