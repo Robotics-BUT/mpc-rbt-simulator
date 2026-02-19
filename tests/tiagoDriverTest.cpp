@@ -8,8 +8,10 @@
 
 //NOTE: WebotsNode is not compiled as a library, but only as an executable, so we don't actually have access to the definition
 // and must create our own one.
+// upto 2023.1.3 -> WebotsNode(std::string name);
+// from 2025.0.0 -> WebotsNode(std::string name, rclcpp::NodeOptions &options);
 namespace webots_ros2_driver {
-    WebotsNode::WebotsNode(std::string name)
+    WebotsNode::WebotsNode(std::string name, rclcpp::NodeOptions&)
         : Node(name), mSetRobotStatePublisher(false), mStep(0),
           mPluginLoader("webots_ros2_driver", "webots_ros2_driver::PluginInterface"), mWebotsXMLElement(nullptr) {}
 }// namespace webots_ros2_driver
@@ -50,7 +52,8 @@ public:
 TEST(tiagoDriverTest, works) {
     // set up the ROS node execution
     std::pair<sensor_msgs::msg::JointState, std::mutex> last_state;
-    auto node = std::make_shared<webots_ros2_driver::WebotsNode>("webots_test");
+    auto options = rclcpp::NodeOptions();
+    auto node = std::make_shared<webots_ros2_driver::WebotsNode>("webots_test", options);
     auto tester = std::make_shared<TiagoDriverTester>([&last_state](sensor_msgs::msg::JointState::SharedPtr msg) {
         // The robot node should ALWAYS publish a state with valid data fields.
         EXPECT_EQ(msg->name.size(), 2u);
@@ -137,7 +140,8 @@ TEST(tiagoDriverTest, works) {
 TEST(tiagoDriverTest, cmdVelTimeout) {
     // set up the ROS node execution
     std::pair<sensor_msgs::msg::JointState, std::mutex> last_state;
-    auto node = std::make_shared<webots_ros2_driver::WebotsNode>("webots_test");
+    auto options = rclcpp::NodeOptions();
+    auto node = std::make_shared<webots_ros2_driver::WebotsNode>("webots_test", options);
     auto tester = std::make_shared<TiagoDriverTester>([&last_state](sensor_msgs::msg::JointState::SharedPtr msg) {
         const std::lock_guard<std::mutex> lock(last_state.second);
         last_state.first = *msg;
