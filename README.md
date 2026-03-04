@@ -34,14 +34,14 @@ https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Install-Binary.h
 
 ### Webots
 
-Webots is the desktop application used to simulate robots and the environment in this project. It requires Webots version `2023b`. One way to install it is to download the pre-built `webots_2023b_amd64.deb` package from the release page:
+Webots is the desktop application used to simulate robots and the environment in this project. It requires Webots version `2025a`. One way to install it is to download the pre-built `webots_2023b_amd64.deb` package from the release page:
 
-https://github.com/cyberbotics/webots/releases/tag/R2023b
+https://github.com/cyberbotics/webots/releases/tag/R2025a
 
 And install it from the same directory manually using:
 
 ```
-wget https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb && sudo apt install ./webots_2023b_amd64.deb
+wget https://github.com/cyberbotics/webots/releases/download/R2025a/webots_2025a_amd64.deb && sudo apt install ./webots_2025a_amd64.deb
 ```
 
 Another option is to set up pre-built binary installation from remote `apt` repositories. All installation options can be found here:
@@ -62,13 +62,13 @@ cd mpc_rbt_ws
 This repository embodies a single ROS 2 package. Navigate to the workspace directory (`mpc_rbt_ws`) and clone this repository into its `src` subdirectory using the following command:
 
 ```
-git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+git clone https://github.com/Robotics-BUT/mpc-rbt-simulator.git src/mpc-rbt-simulator
 ```
 
 or:
 
 ```
-git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc_rbt_simulator
+git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git src/mpc-rbt-simulator
 ```
 
 Package dependencies (mostly other ROS 2 packages) are listed in `package.xml` and can be installed either manually (from source or binary) or automatically via the `rosdep` utility.
@@ -96,7 +96,7 @@ Most of the dependencies are a common part of the ROS 2 distribution. An excepti
 
 ### Visual Studio Code
 
-Any IDE may be used to work on this projet. Visual Studio Code, for example, is a good choice. To install it, download its `.deb` package from the official website:
+Any IDE may be used to work on this project. Visual Studio Code, for example, is a good choice. To install it, download its `.deb` package from the official website:
 
 https://code.visualstudio.com/
 
@@ -127,7 +127,7 @@ source install/setup.bash
 Launch the project (including the simulation) using:
 
 ```
-ros2 launch mpc_rbt_simulator simulation.launch.py
+ros2 launch mpc-rbt-simulator simulation.launch.py
 ```
 
 ## Testing
@@ -138,12 +138,12 @@ Navigate to the workspace directory (`mpc_rbt_ws`) and build it:
 colcon build
 ```
 
-Change the initial robot position in `src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt` to `0 2.5 0.095` by modifying the `translation` parameter in `TiagoBase`.
+Change the initial robot position in `src/mpc-rbt-simulator/worlds/mpc-rbt-warehouse.wbt` to `0 2.5 0.095` by modifying the `translation` parameter in `TiagoBase`.
 
 Spawn the simulation with the robot controller using:
 
 ```
-webots --port=1234 --no-rendering --stdout --stderr --minimize ./src/mpc_rbt_simulator/worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
+webots --port=1234 --no-rendering --stdout --stderr --minimize ./src/mpc-rbt-simulator/worlds/mpc-rbt-warehouse.wbt --batch --mode=realtime
 ```
 > [!NOTE]
 > If you want to watch the simulation during tests remove the `--no-rendering` and `--minimize` arguments.
